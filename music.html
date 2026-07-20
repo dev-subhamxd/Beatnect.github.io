@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CorDex Music</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/music.css" />
+</head>
+<body>
+
+  <!-- Ambient glow backdrop -->
+  <div class="orb orb-aqua"></div>
+  <div class="orb orb-gold"></div>
+  <div class="orb orb-green"></div>
+
+  <div class="app-shell">
+
+    <!-- Side nav -->
+    <nav class="side-nav">
+      <div class="brand">
+        <span class="brand-mark">Cor<span class="brand-accent">Dex</span></span>
+      </div>
+
+      <button class="nav-pill active" data-view="search-view">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span>Search</span>
+      </button>
+
+      <button class="nav-pill" data-view="favourites-view">
+        <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.1C.5 8.4 2.4 5 6 5c2 0 3.5 1.1 4.3 2.3l1.7 2.4 1.7-2.4C14.5 6.1 16 5 18 5c3.6 0 5.5 3.4 4 6.9-2.5 4.5-10 9.1-10 9.1z"/></svg>
+        <span>Favourites</span>
+      </button>
+
+      <a class="nav-pill" href="index.html">
+        <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M9 21V12h6v9"/></svg>
+        <span>Home</span>
+      </a>
+
+      <div class="nav-footer">a piece of CorDex</div>
+    </nav>
+
+    <!-- Main -->
+    <main class="main-panel">
+
+      <!-- SEARCH VIEW -->
+      <section id="search-view" class="view active">
+        <header class="view-header">
+          <h1>Find something to play</h1>
+          <div class="search-bar">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="search-input" type="text" placeholder="Search songs, artists, anything…" autocomplete="off" />
+            <button id="search-clear" class="clear-btn" aria-label="Clear search" hidden>&times;</button>
+          </div>
+        </header>
+
+        <div id="search-status" class="status-line" hidden></div>
+
+        <ul id="results-list" class="results-list"></ul>
+
+        <div id="results-loader" class="loader-more" hidden>
+          <div class="spinner"></div>
+        </div>
+      </section>
+
+      <!-- FAVOURITES VIEW -->
+      <section id="favourites-view" class="view">
+        <header class="view-header">
+          <h1>Your favourites</h1>
+          <p class="view-sub">Everything you've hearted, in one place</p>
+        </header>
+        <ul id="favourites-list" class="results-list"></ul>
+        <p id="favourites-empty" class="empty-msg" hidden>No favourites yet — hit the heart on any track to save it here.</p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Persistent bottom player -->
+  <div class="player-bar" id="player-bar">
+    <div class="player-track">
+      <div class="art-ring" id="art-ring">
+        <img id="player-art" src="" alt="" />
+      </div>
+      <div class="player-meta">
+        <div class="player-title" id="player-title">Nothing playing</div>
+        <div class="player-artist" id="player-artist">Search for a track to start</div>
+      </div>
+      <button id="player-fav" class="icon-btn fav-btn" aria-label="Add to favourites">
+        <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.1C.5 8.4 2.4 5 6 5c2 0 3.5 1.1 4.3 2.3l1.7 2.4 1.7-2.4C14.5 6.1 16 5 18 5c3.6 0 5.5 3.4 4 6.9-2.5 4.5-10 9.1-10 9.1z"/></svg>
+      </button>
+    </div>
+
+    <div class="player-controls">
+      <div class="control-row">
+        <button id="btn-prev" class="icon-btn" aria-label="Previous">
+          <svg viewBox="0 0 24 24"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+        </button>
+        <button id="btn-play" class="icon-btn play-btn" aria-label="Play">
+          <svg id="icon-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+          <svg id="icon-pause" viewBox="0 0 24 24" hidden><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+        <button id="btn-next" class="icon-btn" aria-label="Next">
+          <svg viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+        </button>
+      </div>
+      <div class="progress-row">
+        <span id="time-current" class="time-label">0:00</span>
+        <input id="seek-bar" class="seek-bar" type="range" min="0" max="1000" value="0" />
+        <span id="time-total" class="time-label">0:00</span>
+      </div>
+    </div>
+
+    <div class="player-volume">
+      <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+      <input id="volume-bar" class="volume-bar" type="range" min="0" max="100" value="80" />
+    </div>
+  </div>
+
+  <!-- Hidden YouTube player mount -->
+  <div id="yt-player" style="position:absolute; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none;"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <script src="js/firebase-config.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="js/music.js"></script>
+</body>
+</html>
