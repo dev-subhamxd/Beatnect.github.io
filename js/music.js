@@ -10,7 +10,7 @@
 // Get a key at console.cloud.google.com -> APIs & Services -> Credentials
 // Enable "YouTube Data API v3" on that project first.
 // Restrict the key to your GitHub Pages domain (HTTP referrers) before going live.
-const YOUTUBE_API_KEY = "YOUR_YOUTUBE_DATA_API_KEY";
+const YOUTUBE_API_KEY = "AIzaSyBfVCcesBQkbxJRIPhKG9SNQqafKFJd6Bo";
 // ----------------------------------
 
 const db = firebase.database();
